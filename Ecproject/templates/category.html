@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block metadescription %}
+   {% if category %}
+       {{ category.dec|truncatewords:155 }}
+    {% else %}
+        Welcome to YAK Mart
+     {% endif %}
+{% endblock %}
+{% block title %}
+     {% if category %}
+           {{category.name}}-Yak store
+     {% else %}
+            see our new collections
+     {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if category %}
+<div>
+    <div class="row my_row_class">
+        <div class="mx_auto">
+        <p><a href="{% url 'Ecapp:allprodcat' %}">our product collections</a></p>
+
+
+        </div>
+        </div>
+    </div>
+   {% endif %}
+  <div class="mx-auto">
+            {% if category %}
+            <img class="my_image" src="{{category.img.url}}" alt="{{category.name}}">
+        </div>
+
+        <br>
+        <div>
+            <h1 class="text-center my_title">{{category.name}}</h1>
+            <p>{{category.dec}}</p>
+        </div>
+             {% else %}
+
+<div>
+    <img class="my_image " src="{% static 'images/banner.png' %}" alt="our products">
+    </div>
+
+<br>
+
+
+<br>
+<div>
+    <h1 class="text-center my_title"> our products collection</h1>
+    <p class="text-justify">Did you ever imagine that the freshest of fruits and vegetables, top quality pulses and food grains, dairy products and hundreds of branded items could be handpicked and delivered to your home, all at the click of a button? India’s first comprehensive online megastore, bigbasket.com, brings a whopping 20000+ products with more than 1000 brands, to over 4 million happy customers. From household cleaning products to beauty and makeup, bigbasket has everything you need for your daily needs. yak mart is convenience personified We’ve taken away all the stress associated with shopping for daily essentials, and you can now order all your household products and even buy groceries online without travelling long distances or standing in serpentine queues. Add to this the convenience of finding all your requirements at one single source, along with great savings, and you will realize that bigbasket- India’s largest online supermarket, has revolutionized the way India shops for groceries. Online grocery shopping has never been easier. Need things fresh? Whether it’s fruits and vegetables or dairy and meat, we have this covered as well! Get fresh eggs, meat, fish and more online at your convenience. Hassle-free Home delevary
+    Different fruits and vegetables contain different nutrients. The Australian dietary guidelines recommend that adults eat at least five kinds of vegetable and two kinds of fruit every day. A national nutrition survey conducted by the Australian Government showed that Australians of all ages do not eat enough vegetables and fruit.
+
+Children have a smaller stomach capacity and higher energy needs than adults. They cannot eat the same serving sizes as adults. However, you should encourage your children to eat a variety of fruits and vegetables. By eating well, your children will have the energy they need to play, concentrate better, learn, sleep better and build stronger teeth and bones. Building good habits in their early years can also provide the protection of a healthy diet throughout their lives.
+
+The Australian dietary guidelines have recommendations on how many vegetables and fruits adults, children and adolescents of different ages require. </p>
+</div>
+               {% endif %}
+<div class="container">
+    <div class="row mx_auto">
+        {% for product in products.object_list %}
+        <div class="my_bottom_margin col-9 col-sm-12 col-md-4  xol-lg-4">
+        <div class="card text-center" style="min-width:18rem;">
+            <div>
+                <a href="{{product.get_url}}" ><img class="card-img-top my_image_padding" src="{{product.img.url}}" alt="{{product.name}}"></a>
+                <div class="card-body">
+                    <h4><b>{{product.name}}</b></h4>
+                    <p>{{product.price}}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+                 {% endfor %}
+            </div>
+    <div class="mx_auto">
+    {% if products.paginator.num_pages > 1 %}
+
+
+        <div class="text-center">
+            {% for pg in products.paginator.page_range %}
+            <a href="?page={{pg}}" class="btn btn-light btn-sm {% if products.number == pg %} active {% endif %}">{{pg}}</a>
+            {% endfor %}
+        </div>
+        {% endif %}
+    </div>
+    <br>
+    </div>
+
+
+
+          {% endblock %}
+
